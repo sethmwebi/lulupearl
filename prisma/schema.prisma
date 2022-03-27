@@ -1,0 +1,212 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+// Next auth
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // relations
+  cart   Cart[]
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  phoneNumber String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
+
+
+  payment Payment[]
+  address Address[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+// Product management
+
+model Product {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  description      String   @unique
+  sku       String
+  price     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+  deletedAt DateTime?
+
+  // relations
+  inventoryId String
+  inventory   Inventory    @relation(fields: [inventoryId], references: [id])
+  categoryId  String
+  category    Category     @relation(fields: [categoryId], references: [id])
+  discountId  String?
+  discount    Discount?    @relation(fields: [discountId], references: [id])
+  cart        Cart[]
+  orderItems  OrderItems[]
+}
+
+model Inventory {
+  id        String    @id @default(cuid())
+  quantity  Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?  @updatedAt
+  product   Product[]
+
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  description      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+
+  product Product[]
+}
+
+model Discount {
+  id         String    @id @default(cuid())
+  name       String
+  description       String
+  percentage Int
+  active     Boolean
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime?  @updatedAt
+  deletedAt  DateTime?
+  Product    Product[]
+}
+
+// User management
+
+model Address {
+  id          String  @id @default(cuid())
+  location    String
+  phoneNumber String
+  city        String?
+  postalCode  String?
+
+  // relations
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  username  String
+  password  String
+  firstName String
+  lastName  String
+  lastLogin DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // relations
+  typeId    String
+  adminType AdminType @relation(fields: [typeId], references: [id])
+}
+
+model AdminType {
+  id          String      @id @default(cuid())
+  permissions String[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime?    @updatedAt
+  adminUser   AdminUser[]
+}
+
+// shopping process
+
+model Cart {
+  id        String   @id @default(cuid())
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // relations
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  sessionId String
+  session   Session @relation(fields: [sessionId], references: [id])
+}
+
+model Payment {
+  id           String        @id @default(cuid())
+  amount       Int
+  provider     String
+  status       PaymentStatus
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime?     @updatedAt
+  User         User?         @relation(fields: [userId], references: [id])
+  userId       String?
+  orderId      String
+  orderDetails OrderDetails  @relation(fields: [orderId], references: [id])
+}
+
+model OrderItems {
+  id        String   @id @default(cuid())
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // relations
+  orderId      String
+  orderDetails OrderDetails @relation(fields: [orderId], references: [id])
+  productId    String
+  product      Product      @relation(fields: [productId], references: [id])
+}
+
+model OrderDetails {
+  id        String   @id @default(cuid())
+  total     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // relations
+  orderItems OrderItems[]
+  Payment    Payment[]
+}
+
+enum PaymentStatus {
+  PAID
+  NOTPAID
+}

@@ -1,0 +1,50 @@
+/* ./styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	body {
+		font-family: "Poppins", sans-serif;
+		@apply bg-white/70;
+		@apply text-gray-800;
+	}
+
+	input[type="range"]::-moz-range-thumb,
+	input[type="range"]::-webkit-slider-thumb {
+		pointer-events: auto;
+		-moz-appearance: none !important;
+		-webkit-appearance: none !important;
+		appearance: none;
+		width: 16px;
+		height: 16px;
+		border-radius: 50%;
+		@apply bg-red-400 border-0;
+	}
+}
+
+@layer components {
+	.container {
+		@apply max-w-[90vw] lg:max-w-[80vw] mx-auto;
+	}
+	.active {
+		@apply underline decoration-red-400 decoration-4 underline-offset-8;
+	}
+
+	.link {
+		@apply underline decoration-red-400 decoration-4 underline-offset-8;
+	}
+	.overlay {
+		@apply absolute bottom-[100%] left-0 right-0 bg-black/40 overflow-hidden transition duration-500 ease-in;
+	}
+
+	.tooltip {
+		@apply bg-red-400 text-sm px-2 text-white/70 text-center rounded-sm cursor-pointer py-[5px] absolute z-10 top-[5px] left-[115%] after:content-[""] after:absolute after:top-[50%] after:right-[100%] after:-mt-[5px] after:border-solid after:border-[5px] after:border-t-transparent after:border-r-red-400 after:border-b-transparent after:border-l-transparent;
+	}
+
+	.icon {
+		@apply bg-red-600 rounded-md hover:bg-red-700 cursor-pointer;
+	}
+
+
+}
