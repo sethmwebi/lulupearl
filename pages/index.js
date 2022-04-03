@@ -4,7 +4,8 @@ import Image from "next/image"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import Header from "../components/Header";
-import Featured from "../components/Featured"
+import Featured from "../components/Featured";
+import Layout from "../components/Layout"
 import { setProducts as setFeaturedProducts } from "../redux/featuredSlice";
 import { filterFeatured } from "../redux/featuredSlice"
 
@@ -52,6 +53,14 @@ export default function Home({ featuredProducts, bestSelling }) {
       <Featured />
     </div>
   );
+}
+
+Home.getLayout = function getLayout(page){
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  )
 }
 
 export async function getStaticProps(context) {

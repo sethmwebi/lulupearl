@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setProducts } from "../redux/productSlice";
 import ProductList from "../components/ProductList";
+import Layout from "../components/Layout"
 import { usePagination } from "../utils/hooks";
 
 const Store = ({ products, featuredProducts, bestSelling }) => {
@@ -40,6 +41,14 @@ const Store = ({ products, featuredProducts, bestSelling }) => {
 };
 
 export default Store;
+
+Store.getLayout = function getLayout(page){
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  )
+}
 
 export async function getServerSideProps(context) {
 	let products;

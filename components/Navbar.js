@@ -4,14 +4,14 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import {
 	SearchIcon,
-	UserIcon,
 	ShoppingCartIcon,
 	XIcon,
 	MenuAlt2Icon,
 	XCircleIcon,
+	UserCircleIcon,
 } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import StoreLink from "./storelink";
 import Search from "./Search";
 import MobileNav from "./MobileNav";
@@ -28,6 +28,8 @@ const Navbar = () => {
 	const router = useRouter();
 	const { data: session } = useSession();
 
+	console.log(session);
+
 	return (
 		<nav
 			className="w-full bg-white py-3 shadow-sm sticky top-0 z-50 relative"
@@ -36,42 +38,47 @@ const Navbar = () => {
 			}}
 		>
 			<div className="container flex justify-between z-50">
-				{!showSearchBar && (
-					<MenuAlt2Icon
-						className="md:hidden w-8 h-8 cursor-pointer text-gray-600"
-						onClick={() => dispatch(setMobileNav({ shown: true }))}
-					/>
-				)}
-				<div
-					className="md:flex text-gray-600 uppercase font-bold text-xl select-none cursor-pointer flex items-center flex-1 justify-end md:flex-none"
-					onClick={() => {
-						router.push("/");
-						dispatch(setNavSearchBar({ showSearchBar: false }));
-					}}
-					onMouseEnter={() => {
-						dispatch(setStoreLinkShown({ storeLinkShown: false }));
-					}}
-				>
-					<div className="w-9 h-9 md:w-14 md:h-14 transition-all duration-500 active:bg-gray-200 flex justify-center items-center rounded-full -ml-3.5">
-						<div className="relative h-8 w-8">
-							<Image src="/lulupearl.png" layout="fill" priority />
-						</div>
-					</div>
-					<p
-						className={`${
-							showSearchBar ? "hidden md:inline-flex" : ""
-						} md:ml-2`}
+				<div className="flex w-[62.5%] justify-between items-center">
+					{!showSearchBar && (
+						<MenuAlt2Icon
+							className="md:hidden w-8 h-8 cursor-pointer text-gray-600"
+							onClick={() => dispatch(setMobileNav({ shown: true }))}
+						/>
+					)}
+
+					<div
+						className="md:flex text-gray-600 uppercase font-bold text-xl select-none cursor-pointer flex items-center"
+						onClick={() => {
+							router.push("/");
+							dispatch(setNavSearchBar({ showSearchBar: false }));
+						}}
+						onMouseEnter={() => {
+							dispatch(setStoreLinkShown({ storeLinkShown: false }));
+						}}
 					>
-						lulu<span className="text-red-500">pearl</span>
-					</p>
+						<div className="w-9 h-9 md:w-14 md:h-14 transition-all duration-500 active:bg-gray-200 flex justify-center items-center rounded-full">
+							<div className="relative h-8 w-8">
+								<Image src="/lulupearl.png" layout="fill" priority />
+							</div>
+						</div>
+						<p
+							className={`${
+								showSearchBar ? "hidden md:inline-flex" : ""
+							} md:ml-2`}
+						>
+							lulu<span className="text-red-500">pearl</span>
+						</p>
+					</div>
 				</div>
+
 				<div
 					className={`${
 						showSearchBar ? "block" : "hidden"
-					} flex justify-center items-center bg-gray-100 rounded-lg p-0.5 flex-2 w-full ml-10`}
+					} flex justify-center items-center bg-gray-100 rounded-lg p-0.5 flex-2 w-full`}
 				>
 					<Search />
 				</div>
+
 				<div className="flex items-center space-x-8 justify-center">
 					<div
 						className={`hidden ${
@@ -122,13 +129,29 @@ const Navbar = () => {
 								dispatch(setNavSearchBar({ showSearchBar: false }));
 							}}
 						>
-							<UserIcon className="h-6 w-6 cursor-pointer" />
-							{/*<p className="underline decoration decoration-gray-300 text-xs whitespace-nowrap font-thin cursor-pointer">
-								{session ? session?.user?.name : "Sign In"}
-							</p>*/}
+							{session ? (
+								<img
+									src={session?.user?.image}
+									className="h-6 w-6 rounded-full object-cover"
+								/>
+							) : (
+								<UserCircleIcon
+									onClick={signOut}
+									className="h-6 w-6 cursor-pointer"
+								/>
+							)}
+
 							<div className="underline decoration decoration-gray-300 text-xs whitespace-nowrap font-thin cursor-pointer">
-								{/*{session && <p>{session.user.name}</p>}*/}
-								{session && <p onClick={() => router.push("/login")}>Sign In</p>}
+								{!session && (
+									<p onClick={() => router.push("/signin")}>Sign In</p>
+								)}
+								{session && (
+									<p>
+										{session.user.name.length <= 7
+											? `${session.user.name}`
+											: `${session.user.name.slice(0, 6)}...`}
+									</p>
+								)}
 							</div>
 						</div>
 						<div className="relative" onClick={() => router.push("/cart")}>

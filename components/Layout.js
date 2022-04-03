@@ -8,16 +8,19 @@ import BottomCarousel from "./BottomCarousel";
 const Layout = ({ children }) => {
 	const dispatch = useDispatch();
 	const showElements = useSelector((state) => state.elements.shown);
+
 	return (
 		<div
 			onClick={() => {
 				dispatch(setShown({ shown: false }));
 			}}
 		>
+		<div>
 			<Navbar />
 			{children}
 			<BottomCarousel />
 			<Footer />
+		</div>
 		</div>
 	);
 };

@@ -1,4 +1,5 @@
 import Head from "next/head"
+import Layout from "../components/Layout"
 
 const Contact = () => {
 
@@ -14,3 +15,11 @@ const Contact = () => {
 }
 
 export default Contact
+
+Contact.getLayout = function getLayout(page){
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  )
+}

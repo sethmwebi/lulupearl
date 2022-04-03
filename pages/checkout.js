@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { PlusSmIcon, MinusSmIcon, XCircleIcon } from "@heroicons/react/solid";
 import { useSelector } from "react-redux";
 
-const checkout = () => {
+const Checkout = () => {
 	const { products } = useSelector((state) => ({ ...state.product }));
 	return (
 		<div className="container flex flex-col md:flex-row mt-5 mb-8 gap-x-6">
@@ -53,3 +53,11 @@ const checkout = () => {
 };
 
 export default checkout;
+
+Checkout.getLayout = function getLayout(page){
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  )
+}

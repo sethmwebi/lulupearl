@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 
@@ -13,19 +14,28 @@ export default NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-    EmailProvider({
-      server: process.env.EMAIL_SERVER,
-      from: process.env.EMAIL_FROM,
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     }),
   ],
   theme: {
     colorScheme: "dark",
   },
+  pages: {
+
+  },
   callbacks: {
     async jwt({ token }) {
-      token.userRole = "admin";
       return token;
     },
+    async redirect(url, baseUrl){
+      return 'http://localhost:3000'
+    },
+    async session({session, token, user}){
+      session.user.name = session.user.name.split(' ')[0];
+      return session;
+    }
   },
-  secret: process.env.JWT_SECRET
+  secret: process.env.JWT_SECRET,
 });

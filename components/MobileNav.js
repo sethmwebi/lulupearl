@@ -13,7 +13,9 @@ const MobileNav = () => {
 	const dispatch = useDispatch()
 	const router = useRouter()
 	const { shown } = useSelector(state => ({...state.mobileNav}))
+
 	return (
+		<div className="flex">
 		<div
 				className={`${
 					shown ? "" : "-translate-x-[50vw]"
@@ -42,6 +44,11 @@ const MobileNav = () => {
 						<NavLink href="/contact" title="contact"/>
 					</div>
 				</div>
+			</div>
+			<div
+				className={`${shown && "animate-fadein absolute top-0 right-0 w-[100vw] bg-black/90 h-screen overflow-hidden"} ${!shown && "fadeout"}`}
+			>
+			</div>
 			</div>
 	)
 }
