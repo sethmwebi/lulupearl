@@ -12,10 +12,7 @@ const ProductLink = ({ item }) => (
 const StoreLink = () => {
 	const dispatch = useDispatch();
 	const { storeLinkShown } = useSelector((state) => ({ ...state.elements }));
-
-	const clothing = ["dresses", "skirts", "tops"];
-	const shoes = ["flats", "boots", "heels"];
-	const accessories = ["bags", "wallets", "handbags"];
+	const { clothing, shoes, accessories } = useSelector((state) => ({ ...state.storelink}));
 
 	return (
 		<div

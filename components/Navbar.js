@@ -28,8 +28,6 @@ const Navbar = () => {
 	const router = useRouter();
 	const { data: session } = useSession();
 
-	console.log(session);
-
 	return (
 		<nav
 			className="w-full bg-white py-3 shadow-sm sticky top-0 z-50 relative"
@@ -57,7 +55,7 @@ const Navbar = () => {
 						}}
 					>
 						<div className="w-9 h-9 md:w-14 md:h-14 transition-all duration-500 active:bg-gray-200 flex justify-center items-center rounded-full">
-							<div className="relative h-8 w-8">
+							<div className="relative h-6 w-6">
 								<Image src="/lulupearl.png" layout="fill" priority />
 							</div>
 						</div>
@@ -170,7 +168,7 @@ const Navbar = () => {
 			</div>
 
 			{/*store link dropdown menu*/}
-			<StoreLink />
+			{/*<StoreLink />*/}
 
 			<MobileNav />
 		</nav>

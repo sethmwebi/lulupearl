@@ -5,6 +5,7 @@ import productReducer from "./productSlice"
 import searchReducer from "./searchSlice"
 import mobileNavReducer from "./mobileNavSlice"
 import signupReducer from "./signupSlice"
+import storeLinkReducer from "./storeLinkSlice"
 
 export default configureStore({
 	reducer: {
@@ -13,6 +14,7 @@ export default configureStore({
 		product: productReducer,
 		search: searchReducer,
 		mobileNav: mobileNavReducer,
-		signup: signupReducer
+		signup: signupReducer,
+		storelink: storeLinkReducer
 	}
 })

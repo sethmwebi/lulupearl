@@ -12,7 +12,7 @@ const NavLink = ({ href, title }) => {
 	return (
 		<Link href={href} passHref>
 			<a
-				className={`${router.pathname == href ? "active" : ""}  hover:link`}
+				className={`${router.pathname == href ? "active" : ""}  !hover:link`}
 				onMouseEnter={() => {
 					dispatch(setStoreLinkShown({ storeLinkShown: false }));
 				}}

@@ -9,7 +9,6 @@ const Product = () => {
 	const router = useRouter();
 	const { id } = router.query;
 	const product = products.findIndex((product) => product.id === Number(id));
-	console.log(product);
 
 	if (product < 0) return <p>Sorry, product could not be found!</p>;
 	return (
@@ -67,3 +66,11 @@ const Product = () => {
 };
 
 export default Product;
+
+Product.getLayout = function getLayout(page){
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  )
+}
