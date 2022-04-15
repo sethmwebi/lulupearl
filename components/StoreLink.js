@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { setStoreLinkShown } from "../../redux/elementsSlice";
+import { useRouter } from "next/router";
+import { setStoreLinkShown } from "../redux/elementsSlice";
 
 const activeHover = "hover:text-red-400 cursor-pointer";
 const ProductLink = ({ item }) => (
@@ -12,13 +13,13 @@ const ProductLink = ({ item }) => (
 const StoreLink = () => {
 	const dispatch = useDispatch();
 	const { storeLinkShown } = useSelector((state) => ({ ...state.elements }));
-	const { clothing, shoes, accessories } = useSelector((state) => ({ ...state.storelink}));
+	const { clothing, shoes, accessories } = useSelector((state) => ({
+		...state.storelink,
+	}));
+	const router = useRouter();
 
 	return (
-		<div
-			className={`${
-				storeLinkShown ? "transform transition absolute delay-500" : "hidden"
-			} container top-[100%] z-10 bg-white left-[10vw] border border-gray-200 p-5 text-gray-400 font-normal capitalize flex grid grid-cols-3 h-[300px]`}
+		<div className={`grid grid-cols-3 ${storeLinkShown ? "fixed" : "hidden"} container bg-white left-[10vw] z-50 pb-10 border`}
 		>
 			<div className="border-r ml-20 space-y-4">
 				<h4 className="text-xl uppercase text-black font-semibold">Clothing</h4>
@@ -27,9 +28,10 @@ const StoreLink = () => {
 						<ProductLink
 							key={idx}
 							item={item}
-							onClick={() =>
-								dispatch(setStoreLinkShown({ storeLinkShown: false }))
-							}
+							onClick={() => {
+								dispatch(setStoreLinkShown({ storeLinkShown: false }));
+								router.push("/store");
+							}}
 						/>
 					))}
 				</div>

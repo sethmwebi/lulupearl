@@ -25,7 +25,7 @@
 
 @layer components {
 	.container {
-		@apply max-w-[90vw] lg:max-w-[80vw] mx-auto;
+		@apply max-w-[90vw] md:max-w-[80vw] mx-auto;
 	}
 	.active {
 		@apply underline decoration-red-400 decoration-4 underline-offset-8;

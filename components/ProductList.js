@@ -183,7 +183,7 @@ const ProductList = () => {
 								})}
 							>
 								<AnimatePresence>
-									<Product key={item.id} item={item} />
+									<Product item={item} />
 								</AnimatePresence>
 							</motion.div>
 						

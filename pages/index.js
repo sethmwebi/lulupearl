@@ -30,22 +30,22 @@ export default function Home({ featuredProducts, bestSelling }) {
       </Head>
 
       <header className="bg-gray-100">
-        <div className="container">
+        <div className="container relative">
           <Header />
         </div>
       </header>
       <section className="container my-5">
         <div className="flex flex-col sm:flex-row gap-x-6 gap-y-6 justify-between">
           <div className="bg-gray-100 flex items-center justify-center h-40 flex-1 relative">
-            <img src="/categories/handbag.png" className="w-full h-[40vh] sm:h-40 object-cover" alt=""/>
+            <Image src="/categories/handbag.png" className="object-cover" width="120px" height="160px" alt=""/>
             <Category key="handbags" category="handbags"/>
           </div>
-          <div className="bg-gray-100 h-40 flex-1 relative">
-            <img src="/categories/shoes.png" className="w-full h-[40vh] sm:h-40 md:h-full object-cover object-bottom" alt=""/>
+          <div className="bg-gray-100 flex items-center justify-center h-40 flex-1 relative">
+            <Image src="/categories/shoes.png" className="object-cover" width="200px" height="160px" alt=""/>
             <Category key="shoes" category="shoes"/>
           </div>
-          <div className="bg-gray-100 h-40 flex-1 relative">
-            <img src="/categories/clothes.png" className="w-full h-[40vh] sm:h-40 md:h-full object-cover" alt=""/>
+          <div className="bg-gray-100 flex items-center justify-center h-40 flex-1 relative">
+            <Image src="/categories/clothes.png" className="object-cover" width="200px" height="160px" alt=""/>
             <Category key="clothes" category="clothes"/>
           </div>
         </div>

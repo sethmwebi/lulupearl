@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { PlusSmIcon, MinusSmIcon, XCircleIcon } from "@heroicons/react/solid";
+import Layout from "../../components/Layout"
 
 const Product = () => {
 	const { products } = useSelector((state) => ({ ...state.product }));

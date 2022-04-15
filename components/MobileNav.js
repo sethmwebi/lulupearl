@@ -21,9 +21,8 @@ const MobileNav = () => {
 	const { clothing, shoes, accessories } = useSelector((state) => ({
 		...state.storelink,
 	}));
-	const [expanded, setExpanded] = useState(false);
+	const [expanded, setExpanded] = useState(true);
 	const [display, setDisplay] = useState(false);
-	console.log( {clothingItems, shoeItems, accessoryItems} );
 
 	const toggleMain = () => {
 		if (!expanded) {

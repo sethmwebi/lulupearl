@@ -8,8 +8,8 @@ module.exports = {
       animation: {
         fadein: 'fadeIn 150ms ease-in-out',
         fadeout: 'fadeOut 500ms ease-in-out',
-        storeshow: 'storeShow 3s ease-in-out',
-        storehide: 'storeHide 200s ease-in-out'
+        storeshow: 'storeShow 1s linear',
+        storehide: 'storeHide 1s linear'
       },
       keyframes: {
         fadeIn: {
@@ -25,12 +25,14 @@ module.exports = {
           '100%': {backgroundColor: 'none'},
         },
         storeShow: {
-          '0%': { transform: 'translateY(-10px)'},
-          '50%': { transform: 'translateY(-5px)'},
-          '100%': { transform: 'translateY(0px)'},
+          '0%': {transform: 'translateY(5px)'},
+          '50%': {transform: 'translateY(7px)'},
+          '100%': {transform: 'translateY(7px)'},
         },
         storeHide: {
-          '0%, 100%': { transform: 'translateY(-3px)', zIndex: '-99'}
+          '0%': { transform: 'translateY(-50px)'},
+          '50%': { transform: 'translateY(-100px)'},
+          '100%': { transform: 'translateY(-10000px)'},
         }
       }
     },

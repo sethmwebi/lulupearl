@@ -5,6 +5,7 @@ import { HeartIcon } from "@heroicons/react/outline";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { setTooltip, setHoveredItem } from "../redux/productSlice";
+import { addToCart } from "../redux/cartSlice";
 
 const Product = ({ item }) => {
 	const dispatch = useDispatch();
@@ -71,7 +72,10 @@ const Product = ({ item }) => {
 					height="200px"
 					width="200px"
 				/>
-				<div className="block absolute text-white/70 px-2 py-3 cursor-pointer hover:bg-black/80 bottom-0 right-0 bg-red-400">
+				<div className="block absolute text-white/70 px-2 py-3 cursor-pointer hover:bg-black/80 bottom-0 right-0 bg-red-400" onClick={(e) => {
+					e.stopPropagation()
+					dispatch(addToCart(item))
+				}}>
 					Add To Cart
 				</div>
 			</motion.div>
