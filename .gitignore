@@ -36,3 +36,4 @@ yarn-error.log*
 
 # postgresql scripts
 postgresql.sql
+.env*.local
